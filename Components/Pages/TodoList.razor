@@ -1,0 +1,113 @@
+﻿@page "/todolist"
+@rendermode InteractiveServer
+@inject ITodoService itodoservice
+
+<PageTitle>Lista de Tarefas</PageTitle>
+
+<h3> Lista de tarefas</h3>
+
+<button class="btn btn-dark" @onclick="GetActiveTodos">Recarregar</button>
+
+@if( todos != null && todos.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Priority</th>
+                <th>Done</th>
+                <th>DoneDate</th>
+                <th>*</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var todo in todos)
+            {
+                <tr 
+                style="cursor: pointer; @(todo.Done ? "text-decoration: line-through": "")"
+                    class="@(todo.Priority == TodoPriority.Urgent ? "table-danger" : "")"
+                    @onclick="() => ChangePriority(todo)"
+                    >
+                    <td>@todo.Title</td>
+                    <td>@todo.Priority</td>
+                    <td><input type="checkbox" checked="@todo.Done" @onchange="() => UpdateDoneDate(todo)" /></td>
+                    <td>@todo.DoneCreate</td>
+                    <td>
+                        <button class="btn btn-dark" @onclick="() => EditTodo(todo)">Edit</button>
+                        <button class="btn btn-danger" @onclick="() => RemoveTodo(todo)">Delete</button>
+                    </td>
+                </tr>
+                @if(todo.Edit)
+                {
+                    <tr>
+                        <td colspan="5">
+                            <!-- Criando component -->
+                            <FormTodo EditTodo="todo"></FormTodo>
+                        </td>
+                    </tr>
+                }
+            }
+
+           
+        </tbody>
+    </table>
+} else
+{
+    <div class="mt-2">
+        <p>Nenhuma tarefa listada</p>
+    </div>
+}
+
+<button class="btn btn-dark" @onclick="NewTodo">Adicionar Tarefa</button>
+
+@code {
+    private List<Todo>? todos;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetActiveTodos();
+    }
+
+    private async Task GetActiveTodos()
+    {       
+        todos = await itodoservice.GetActiveTodos();
+    }
+
+    private async Task NewTodo()
+    {
+        await itodoservice.NewTodo();
+        await GetActiveTodos(); //-> atualiza variavel
+    }
+
+    private void UpdateDoneDate(Todo todo)
+    {
+        if(todo.Done)
+        {
+            todo.DoneCreate = null;
+            todo.Done = false;
+        } else
+        {
+            todo.DoneCreate = DateTime.Now;
+            todo.Done = true;            
+        }
+    }
+
+    private async Task RemoveTodo(Todo todo)
+    {
+        await itodoservice.Remove(todo);
+        await GetActiveTodos(); //-> atualiza variavel
+    }
+
+    private void EditTodo(Todo todo)
+    {
+        todo.Edit = !todo.Edit;
+    }
+
+    private async Task ChangePriority(Todo todo)
+    {
+        var priorityIndex = (int)todo.Priority;
+        priorityIndex++;
+        todo.Priority = priorityIndex > 3 ? TodoPriority.Urgent : (TodoPriority)priorityIndex;
+        await itodoservice.Update(todo);
+    }
+}

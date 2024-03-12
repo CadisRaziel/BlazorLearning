@@ -1,0 +1,49 @@
+﻿@inject ITodoService itodoservice
+
+
+@if (EditTodo != null) {
+<h4 class="mt-2">Modificar a tarefa</h4>
+<form>
+    <div class="mt-2">
+        <label class="form-label" for="">Title</label>
+            <InputText class="form-control" required @bind-Value="EditTodo.Title" />
+    </div>
+        <div class="mt-2">
+            <label class="form-label" for="">Description</label>
+            <InputTextArea class="form-control" required @bind-Value="EditTodo.Description" />
+        </div>
+<div class="mt-2">
+    <label class="form-label" for="">Priority</label>
+            <select class="form-select" @bind="EditTodo.Priority">
+        <option value="null"> -- Selecione -- </option>
+        @foreach (var priority in Enum.GetValues(typeof(TodoPriority)))
+        {
+            <option value="@priority">@priority</option>
+        }        
+    </select>
+</div>
+    <div class="mt-4 mb-2">
+            <button class="btn btn-dark" @onclick="SaveTodoAsync">Salvar</button>
+        <button class="btn btn-danger">Cancelar</button>
+    </div>
+</form>
+    
+}
+
+@code {
+    //Não consigo por comentario acima
+    //@inject é como injetamos dependencia
+    //todos os imports de arquivos blazor vai ficar no _imports.razor
+
+
+    [Parameter] //-> para ficar reconhecido externamente (quando eu ir no arquivo escrever as primeiras letras do 'EditTodo' ele ja vai mostar como um parametro que eu posso usar)
+    public Todo? EditTodo { get; set; } 
+
+    private async Task SaveTodoAsync()
+    {
+        if(EditTodo is not null)
+        {
+            EditTodo = await itodoservice.Update(EditTodo);
+        }
+    }
+}

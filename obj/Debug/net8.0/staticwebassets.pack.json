@@ -1,0 +1,41 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\Lenovo\\Documents\\aprendendo_csharp\\BlazorLearning\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\BlazorLearning.bundle.scp.css",
+      "PackagePath": "staticwebassets\\BlazorLearning.bundle.scp.css"
+    },
+    {
+      "Id": "C:\\Users\\Lenovo\\Documents\\aprendendo_csharp\\BlazorLearning\\wwwroot\\app.css",
+      "PackagePath": "staticwebassets\\app.css"
+    },
+    {
+      "Id": "C:\\Users\\Lenovo\\Documents\\aprendendo_csharp\\BlazorLearning\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Lenovo\\Documents\\aprendendo_csharp\\BlazorLearning\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lenovo\\Documents\\aprendendo_csharp\\BlazorLearning\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.BlazorLearning.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.BlazorLearning.props",
+      "PackagePath": "build\\BlazorLearning.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.BlazorLearning.props",
+      "PackagePath": "buildMultiTargeting\\BlazorLearning.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.BlazorLearning.props",
+      "PackagePath": "buildTransitive\\BlazorLearning.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
